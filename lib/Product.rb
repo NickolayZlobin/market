@@ -1,8 +1,7 @@
 class Product
 
-
- attr_reader :price, :amount
- attr_writer :price, :amount
+  attr_reader :price, :amount
+  attr_writer :price, :amount
   def initialize(params)
     @price = params[:price]
     @amount = params[:amount]
@@ -16,4 +15,9 @@ class Product
     @price = params[:price] if params[:price]
     @amount = params[:amount] if params[:amount]
   end
+
+  def self.from_file(file_path)
+    raise NotImplementedError
+  end
+  
 end

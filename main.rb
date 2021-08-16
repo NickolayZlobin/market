@@ -11,13 +11,15 @@ require_relative "lib/product"
 require_relative "lib/book"
 require_relative "lib/movie"
 
-film = Movie.new(title: 'Леон', director: 'Люк Бессон', price: 990)
-film.year = 1994
-film.update(amount: 5)
-
-book = Book.new(title: 'Идиот', genre: 'роман', amount: 10)
-book.author = 'Федька Достоевский'
-book.update(author: 'Фёдор Достоевский', price: 1500)
+current_path = File.dirname(__FILE__)
+film = Movie.from_file(current_path + '/data/films/01.txt')
+book = Book.from_file(current_path + '/data/books/01.txt')
 
 puts film
 puts book
+
+begin
+  Product.from_file(current_path + '/data/films/01.txt')
+rescue NotImplementedError
+  puts 'Метод класса Product.from_file не реализован'
+end
