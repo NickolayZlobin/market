@@ -13,11 +13,11 @@ require_relative "lib/movie"
 
 products = []
 
-products << Film.new(
+products << Movie.new(
   title: 'Леон', year: '1994', director: 'Люк Бессон', price: 990, amount: 5
 )
 
-products << Film.new(
+products << Movie.new(
   title: 'Дурак', year: '2014', director: 'Юрий Быков', price: 390, amount: 1
 )
 
