@@ -1,11 +1,4 @@
-# encoding: utf-8
-#
-# Программа-магазин книг и фильмов. Версия 0.5 — с классом ProductCollection,
-# который умеет хранить и сортировать коллекцию любых продуктов.
-#
-# (с) goodprogrammer.ru
-#
-# Этот код необходим только при использовании русских букв на Windows
+
 if Gem.win_platform?
   Encoding.default_external = Encoding.find(Encoding.locale_charmap)
   Encoding.default_internal = __ENCODING__
@@ -14,25 +7,24 @@ if Gem.win_platform?
     io.set_encoding(Encoding.default_external, Encoding.default_internal)
   end
 end
-
+require 'rexml/document'
 require_relative 'lib/product'
 require_relative 'lib/book'
 require_relative 'lib/film'
+require_relative 'lib/disk'
 
-# Подключаем класс ProductCollection
-require_relative 'lib/product_collection'
-
-# Создаем коллекцию продуктов, передавая методу класса from_dir путь к папке
-# с подпапками films и books. ProductCollection сам знает, как там внутри лежат
-# эти файлы и сам разбереться, как их оттуда считать.
-collection = ProductCollection.from_dir(File.dirname(__FILE__) + '/data')
-
-# Сортируем продукты по возрастанию цены с помощью метода sort! экземпляра
-# класса ProductCollection
-collection.sort!(by: :price, order: :asc)
-
-# Получаем массив продуктов методом to_a и выводим каждый на экран, передавая
-# его методу puts в качестве аргумента.
-collection.to_a.each do |product|
-  puts product
+total_price = 0
+products = Product.read_from_xml('data/products.xml')
+choice = nil
+while choice != "x"
+  Product.showcase(products) 
+  choice = STDIN.gets.chomp
+  if choice != "x" && choice.to_i < products.size && choice.to_i >= 0
+    product = products[choice.to_i]
+    total_price += product.buy
+  end
 end
+puts "Спасибо за покупки, с Вас #{total_price} руб."
+
+
+
